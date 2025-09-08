@@ -9,7 +9,7 @@ variables:
   testsFolder: './_tests'
   yarnCacheFolder: $(Pipeline.Workspace)/.yarn
   nugetCacheFolder: $(Pipeline.Workspace)/.nuget/packages
-  majorVersion: '5.28.1'
+  majorVersion: '5.28.100'
   minorVersion: $[counter('minorVersion', 2000)]
   radarrVersion: '$(majorVersion).$(minorVersion)'
   buildName: '$(Build.SourceBranchName).$(radarrVersion)'
@@ -26,7 +26,7 @@ trigger:
   branches:
     include:
     - develop
-    - master
+    - main
   paths:
     exclude:
       - .github
@@ -386,7 +386,7 @@ stages:
           or
           (
             and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop')),
-            and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+            and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
           )
         env:
           SENTRY_AUTH_TOKEN: $(sentryAuthTokenServarr)
@@ -1174,7 +1174,7 @@ stages:
           then
             git commit -am 'Automated API Docs update'
             git push -f --set-upstream origin api-docs
-            curl -X POST -H "Authorization: token ${GITHUBTOKEN}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/radarr/radarr/pulls -d '{"head":"api-docs","base":"develop","title":"Update API docs"}'
+            curl -X POST -H "Authorization: token ${GITHUBTOKEN}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/vtorres-t/radarr/pulls -d '{"head":"api-docs","base":"develop","title":"Update API docs"}'
           else
             echo "No changes since last run"
           fi
@@ -1243,35 +1243,3 @@ stages:
           targetdir: '$(Build.SourcesDirectory)/CoverageResults/combined'
           reporttypes: 'HtmlInline_AzurePipelines;Cobertura;Badges'
           publishCodeCoverageResults: true
-
-  - stage: Report_Out
-    dependsOn:
-    - Analyze
-    - Installer
-    - Unit_Test
-    - Integration
-    - Automation
-    condition: eq(variables['system.pullrequest.isfork'], false)
-    displayName: Build Status Report
-    jobs:
-    - job:
-      displayName: Discord Notification
-      pool:
-        vmImage: ${{ variables.linuxImage }}
-      steps:
-        - task: DownloadPipelineArtifact@2
-          continueOnError: true
-          displayName: Download Screenshot Artifact
-          inputs:
-            buildType: 'current'
-            artifactName: 'WindowsAutomationScreenshots'
-            targetPath: $(Build.SourcesDirectory)
-        - checkout: none
-        - pwsh: |
-            iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Servarr/AzureDiscordNotify/master/DiscordNotify.ps1'))
-          env:
-            SYSTEM_ACCESSTOKEN: $(System.AccessToken)
-            DISCORDCHANNELID: $(discordChannelId)
-            DISCORDWEBHOOKKEY: $(discordWebhookKey)
-            DISCORDTHREADID: $(discordThreadId)
-
