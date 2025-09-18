@@ -106,7 +106,6 @@ namespace Radarr.Api.V3.Calendar
 
             occurrence.Start = new CalDateTime(date.Value);
             occurrence.End = occurrence.Start;
-            occurrence.IsAllDay = true;
 
             occurrence.Description = movie.Overview;
             occurrence.Categories = new List<string> { movie.Studio };
