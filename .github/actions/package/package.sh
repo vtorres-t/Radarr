@@ -34,30 +34,9 @@ do
   find $radarrFolder -name "Radarr" -exec chmod a+x {} \;
   find $radarrFolder -name "Radarr.Update" -exec chmod a+x {} \;
   
-  if [[ "$name" == *"osx"* ]]; then
-    echo "Creating macOS package"
-      
-    packageName="$name-app"
-    packageFolder="$outputFolder/$packageName"
-      
-    rm -rf $packageFolder
-    mkdir $packageFolder
-      
-    cp -r distribution/macOS/Radarr.app $packageFolder
-    mkdir -p $packageFolder/Radarr.app/Contents/MacOS
-      
-    echo "Copying Binaries"
-    cp -r $radarrFolder/* $packageFolder/Radarr.app/Contents/MacOS
-      
-    echo "Removing Update Folder"
-    rm -r $packageFolder/Radarr.app/Contents/MacOS/Radarr.Update
-              
-    echo "Packaging macOS app Artifact"
-    (cd $packageFolder; zip -rq "../../$artifactsFolder/$archiveName-app.zip" ./Radarr.app)
-  fi
 
   echo "Packaging Artifact"
-  if [[ "$name" == *"linux"* ]] || [[ "$name" == *"osx"* ]] || [[ "$name" == *"freebsd"* ]]; then
+  if [[ "$name" == *"linux"* ]]; then
     tar -zcf "./$artifactsFolder/$archiveName.tar.gz" -C $folderName Radarr
 	fi
     

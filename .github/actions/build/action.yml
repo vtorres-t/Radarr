@@ -37,23 +37,6 @@ runs:
           echo "NUGET_PACKAGES=D:\nuget\packages" >> "$GITHUB_ENV"
         fi
 
-    - name: Enable Extra Platforms In SDK
-      if: ${{ inputs.runtime == 'freebsd-x64' }}
-      shell: bash
-      run: |
-        BUNDLEDVERSIONS="${SDK_PATH}/Microsoft.NETCoreSdk.BundledVersions.props"
-
-        if grep -q freebsd-x64 "$BUNDLEDVERSIONS"; then
-          echo "Extra platforms already enabled"
-        else
-          echo "Enabling extra platform support"
-          sed -i.ORI 's/osx-x64/osx-x64;freebsd-x64/' "$BUNDLEDVERSIONS"
-        fi
-
-        if grep -qv freebsd-x64 src/Directory.Build.props; then
-          sed -i'' -e "s^<RuntimeIdentifiers>\(.*\)</RuntimeIdentifiers>^<RuntimeIdentifiers>\1;freebsd-x64</RuntimeIdentifiers>^g" src/Directory.Build.props
-        fi
-
     - name: Update Version Number
       shell: bash
       run: |
@@ -102,7 +85,7 @@ runs:
         rm -rf _output/Radarr.Update/$framework/$runtime/publish/*.pdb
         
         case "${SPLIT[0]}" in
-          linux|freebsd*)
+          linux)
             folder=_artifacts/$runtime/$framework/Radarr
 
             echo "Packaging files"
@@ -143,29 +126,6 @@ runs:
 
             echo "Adding Radarr.Windows to UpdatePackage"
             cp $folder/Radarr.Windows.* $folder/Radarr.Update
-
-            ;;
-          osx)
-            folder=_artifacts/$runtime/$framework/Radarr
-
-            echo "Packaging files"
-            rm -rf $folder
-            mkdir -p $folder
-            cp -r _output/$framework/$runtime/publish/* $folder
-            cp -r _output/Radarr.Update/$framework/$runtime/publish $folder/Radarr.Update
-            cp LICENSE.md $folder
-
-            echo "Removing Service helpers"
-            rm -f $folder/ServiceUninstall.*
-            rm -f $folder/ServiceInstall.*
-
-            echo "Removing Radarr.Windows"
-            rm $folder/Radarr.Windows.*
-
-            echo "Adding Radarr.Mono to UpdatePackage"
-            cp $folder/Radarr.Mono.* $folder/Radarr.Update
-            cp $folder/Mono.Posix.NETStandard.* $folder/Radarr.Update
-            cp $folder/libMonoPosixHelper.* $folder/Radarr.Update
             ;;
         esac
 
