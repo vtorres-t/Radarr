@@ -12,7 +12,7 @@ for runtime in _output/*
 do
   name="${runtime##*/}"
   folderName="$runtime/$framework"
-  sonarrFolder="$folderName/Radarr"
+  radarrFolder="$folderName/Radarr"
   archiveName="Radarr.$BRANCH.$RADARR_VERSION.$name"
 
   if [[ "$name" == 'UI' ]]; then
@@ -25,14 +25,14 @@ do
   rm -rf $uiFolder/*.map
 
   echo "Copying UI"
-  cp -r $uiFolder $sonarrFolder
+  cp -r $uiFolder $radarrFolder
   
 
   
   echo "Setting permissions"
-  find $sonarrFolder -name "ffprobe" -exec chmod a+x {} \;
-  find $sonarrFolder -name "Radarr" -exec chmod a+x {} \;
-  find $sonarrFolder -name "Radarr.Update" -exec chmod a+x {} \;
+  find $radarrFolder -name "ffprobe" -exec chmod a+x {} \;
+  find $radarrFolder -name "Radarr" -exec chmod a+x {} \;
+  find $radarrFolder -name "Radarr.Update" -exec chmod a+x {} \;
   
   if [[ "$name" == *"osx"* ]]; then
     echo "Creating macOS package"
@@ -47,7 +47,7 @@ do
     mkdir -p $packageFolder/Radarr.app/Contents/MacOS
       
     echo "Copying Binaries"
-    cp -r $sonarrFolder/* $packageFolder/Radarr.app/Contents/MacOS
+    cp -r $radarrFolder/* $packageFolder/Radarr.app/Contents/MacOS
       
     echo "Removing Update Folder"
     rm -r $packageFolder/Radarr.app/Contents/MacOS/Radarr.Update
