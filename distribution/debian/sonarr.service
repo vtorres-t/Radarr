@@ -1,0 +1,20 @@
+# This file is owned by the radarr package, DO NOT MODIFY MANUALLY
+# Instead use 'dpkg-reconfigure -plow radarr' to modify User/Group/UMask/-data
+# Or use systemd built-in override functionality using 'systemctl edit radarr'
+[Unit]
+Description=Radarr Daemon
+After=network.target
+
+[Service]
+User=radarr
+Group=radarr
+UMask=002
+
+Type=simple
+ExecStart=/opt/Radarr/Radarr -nobrowser -data=/var/lib/radarr
+TimeoutStopSec=20
+KillMode=process
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
