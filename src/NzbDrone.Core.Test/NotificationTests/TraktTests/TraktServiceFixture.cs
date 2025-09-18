@@ -69,6 +69,7 @@ namespace NzbDrone.Core.Test.NotificationTests
             Mocker.GetMock<ITraktProxy>()
                   .Verify(v => v.AddToCollection(It.IsAny<TraktCollectMoviesResource>(), It.IsAny<string>()), Times.Once());
         }
+
         /*
         [Test]
         public void should_add_collection_movie_if_valid_mediainfo()
