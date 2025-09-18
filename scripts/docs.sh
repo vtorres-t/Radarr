@@ -43,7 +43,7 @@ dotnet tool install --version 9.0.3 Swashbuckle.AspNetCore.Cli
 # Remove the openapi.json file so we can check if it was created
 rm $outputFile
 
-dotnet tool run swagger tofile --output ./src/Radarr.Api.V5/openapi.json "$outputFolder/$FRAMEWORK/$RUNTIME/$application" v5 &
+dotnet tool run swagger tofile --output ./src/Radarr.Api.V3/openapi.json "$outputFolder/$FRAMEWORK/$RUNTIME/$application" v3 &
 
 sleep 45
 
