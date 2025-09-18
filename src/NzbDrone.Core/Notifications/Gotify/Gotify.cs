@@ -13,7 +13,7 @@ namespace NzbDrone.Core.Notifications.Gotify
 {
     public class Gotify : NotificationBase<GotifySettings>
     {
-        private const string RadarrImageUrl = "https://raw.githubusercontent.com/Radarr/Radarr/develop/Logo/128.png";
+        private const string RadarrImageUrl = "https://raw.githubusercontent.com/vtorres-t/Radarr/develop/Logo/128.png";
 
         private readonly IGotifyProxy _proxy;
         private readonly ILocalizationService _localizationService;
