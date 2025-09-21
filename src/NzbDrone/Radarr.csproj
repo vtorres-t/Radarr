@@ -8,9 +8,6 @@
     <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="System.Resources.Extensions" Version="9.0.9" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\NzbDrone.Host\Radarr.Host.csproj" />
     <ProjectReference Include="..\NzbDrone.Windows\Radarr.Windows.csproj" />
   </ItemGroup>

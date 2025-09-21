@@ -23,10 +23,9 @@
     <PackageReference Include="FluentValidation" Version="9.5.4" />
     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.11" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
-    <PackageReference Include="NLog" Version="5.4.0" />
+    <PackageReference Include="NLog" Version="5.3.4" />
     <PackageReference Include="System.Data.SQLite.Core.Servarr" Version="1.0.115.5-18" />
     <PackageReference Include="MonoTorrent" Version="3.0.2" />
-    <PackageReference Include="System.Text.Encoding.CodePages" Version="9.0.9" />
     <PackageReference Include="System.Text.Json" Version="9.0.9" />
   </ItemGroup>
   <ItemGroup>

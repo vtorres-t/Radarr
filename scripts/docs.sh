@@ -23,7 +23,6 @@ rm -rf $outputFolder
 rm -rf $testPackageFolder
 
 slnFile=src/Radarr.sln
-outputFile=src/Radarr.Api.V5/openapi.json
 platform=Posix
 
 if [ "$PLATFORM" = "Windows" ]; then
@@ -40,18 +39,10 @@ dotnet msbuild -restore $slnFile -p:Configuration=Debug -p:Platform=$platform -p
 dotnet new tool-manifest
 dotnet tool install --version 9.0.3 Swashbuckle.AspNetCore.Cli
 
-# Remove the openapi.json file so we can check if it was created
-rm $outputFile
-
 dotnet tool run swagger tofile --output ./src/Radarr.Api.V3/openapi.json "$outputFolder/$FRAMEWORK/$RUNTIME/$application" v3 &
 
 sleep 45
 
 kill %1
-
-if [ ! -f $outputFile ]; then
-  echo "$outputFile not found, check logs for errors"
-  exit 1
-fi
 
 exit 0

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Reflection;
 using NLog;
@@ -9,6 +9,7 @@ namespace NzbDrone.Common.EnvironmentInfo
     public interface IAppFolderInfo
     {
         string AppDataFolder { get; }
+        string LegacyAppDataFolder { get; }
         string TempFolder { get; }
         string StartUpFolder { get; }
     }
@@ -34,6 +35,7 @@ namespace NzbDrone.Common.EnvironmentInfo
             else
             {
                 AppDataFolder = Path.Combine(Environment.GetFolderPath(_dataSpecialFolder, Environment.SpecialFolderOption.DoNotVerify), "Radarr");
+                LegacyAppDataFolder = Path.Combine(Environment.GetFolderPath(_dataSpecialFolder, Environment.SpecialFolderOption.DoNotVerify), "NzbDrone");
             }
 
             StartUpFolder = new FileInfo(Assembly.GetExecutingAssembly().Location).Directory.FullName;
@@ -41,6 +43,7 @@ namespace NzbDrone.Common.EnvironmentInfo
         }
 
         public string AppDataFolder { get; private set; }
+        public string LegacyAppDataFolder { get; }
 
         public string StartUpFolder { get; private set; }
 
