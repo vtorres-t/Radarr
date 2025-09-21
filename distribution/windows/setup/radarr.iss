@@ -9,6 +9,8 @@
 #define BaseVersion GetEnv('MAJORVERSION')
 #define BuildNumber GetEnv('MINORVERSION')
 #define BuildVersion GetEnv('RADARRVERSION')
+#define BranchName GetEnv('BRANCH')
+#define Framework GetEnv('FRAMEWORK')
 #define Runtime GetEnv('RUNTIME')
 
 [Setup]
