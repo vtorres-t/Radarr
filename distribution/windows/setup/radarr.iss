@@ -24,7 +24,7 @@ AppPublisher={#AppPublisher}
 AppPublisherURL={#AppURL}
 AppSupportURL={#ForumsURL}
 AppUpdatesURL={#AppURL}
-DefaultDirName={commonappdata}\Radarr
+DefaultDirName={commonappdata}\Radarr\bin
 DisableDirPage=yes
 DefaultGroupName={#AppName}
 DisableProgramGroupPage=yes
@@ -32,15 +32,16 @@ OutputBaseFilename=Radarr.{#BranchName}.{#BuildNumber}.{#Runtime}-installer
 SolidCompression=yes
 AppCopyright=Creative Commons 3.0 License
 AllowUNCPath=False
-UninstallDisplayIcon={app}\bin\Radarr.exe
+UninstallDisplayIcon={app}\Radarr.exe
 DisableReadyPage=True
 CompressionThreads=2
 Compression=lzma2/normal
 AppContact={#ForumsURL}
 VersionInfoVersion={#MajorVersion}
 SetupLogging=yes
-OutputDir=output
+OutputDir="..\..\..\_artifacts"
 WizardStyle=modern
+AppverName={#AppName}
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -51,31 +52,29 @@ Name: "windowsService"; Description: "Install Windows Service (Starts when the c
 Name: "startupShortcut"; Description: "Create shortcut in Startup folder (Starts when you log into Windows)"; GroupDescription: "Start automatically"; Flags: exclusive unchecked
 Name: "none"; Description: "Do not start automatically"; GroupDescription: "Start automatically"; Flags: exclusive unchecked
 
-[Dirs]
-Name: "{app}"; Permissions: users-modify
-
 [Files]
-Source: "..\..\..\_artifacts\{#Runtime}\{#Framework}\Radarr\Radarr.exe"; DestDir: "{app}\bin"; Flags: ignoreversion
-Source: "..\..\..\_artifacts\{#Runtime}\{#Framework}\Radarr\*"; Excludes: "Radarr.Update"; DestDir: "{app}\bin"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\..\..\_output\{#Runtime}\{#Framework}\Radarr\Radarr.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\..\_output\{#Runtime}\{#Framework}\Radarr\*"; Excludes: "Radarr.Update"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{group}\{#AppName}"; Filename: "{app}\bin\{#AppExeName}"; Parameters: "/icon"
-Name: "{commondesktop}\{#AppName}"; Filename: "{app}\bin\{#AppExeName}"; Parameters: "/icon"; Tasks: desktopIcon
-Name: "{userstartup}\{#AppName}"; Filename: "{app}\bin\Radarr.exe"; WorkingDir: "{app}\bin"; Tasks: startupShortcut
+Name: "{group}\{#AppName}"; Filename: "{app}\{#AppExeName}"; Parameters: "/icon"
+Name: "{commondesktop}\{#AppName}"; Filename: "{app}\{#AppExeName}"; Parameters: "/icon"; Tasks: desktopIcon
+Name: "{userstartup}\{#AppName}"; Filename: "{app}\Radarr.exe"; WorkingDir: "{app}"; Tasks: startupShortcut
 
 [InstallDelete]
-Name: "{app}\bin"; Type: filesandordirs
+Name: "{commonappdata}\NzbDrone\bin"; Type: filesandordirs
+Name: "{app}"; Type: filesandordirs
 
 [Run]
-Filename: "{app}\bin\Radarr.Console.exe"; StatusMsg: "Removing previous Windows Service"; Parameters: "/u /exitimmediately"; Flags: runhidden waituntilterminated;
-Filename: "{app}\bin\Radarr.Console.exe"; Description: "Enable Access from Other Devices"; StatusMsg: "Enabling Remote access"; Parameters: "/registerurl /exitimmediately"; Flags: postinstall runascurrentuser runhidden waituntilterminated; Tasks: startupShortcut none;
-Filename: "{app}\bin\Radarr.Console.exe"; StatusMsg: "Installing Windows Service"; Parameters: "/i /exitimmediately"; Flags: runhidden waituntilterminated; Tasks: windowsService
-Filename: "{app}\bin\Radarr.exe"; Description: "Open Radarr Web UI"; Flags: postinstall skipifsilent nowait; Tasks: windowsService;
-Filename: "{app}\bin\Radarr.exe"; Description: "Start Radarr"; Flags: postinstall skipifsilent nowait; Tasks: startupShortcut none;
+Filename: "{app}\Radarr.Console.exe"; StatusMsg: "Removing previous Windows Service"; Parameters: "/u /exitimmediately"; Flags: runhidden waituntilterminated;
+Filename: "{app}\Radarr.Console.exe"; Description: "Enable Access from Other Devices"; StatusMsg: "Enabling Remote access"; Parameters: "/registerurl /exitimmediately"; Flags: postinstall runascurrentuser runhidden waituntilterminated; Tasks: startupShortcut none;
+Filename: "{app}\Radarr.Console.exe"; StatusMsg: "Installing Windows Service"; Parameters: "/i /exitimmediately"; Flags: runhidden waituntilterminated; Tasks: windowsService
+Filename: "{app}\Radarr.exe"; Description: "Open Radarr Web UI"; Flags: postinstall skipifsilent nowait; Tasks: windowsService;
+Filename: "{app}\Radarr.exe"; Description: "Start Radarr"; Flags: postinstall skipifsilent nowait; Tasks: startupShortcut none;
 
 [UninstallRun]
-Filename: "{app}\bin\radarr.console.exe"; Parameters: "/u"; Flags: waituntilterminated skipifdoesntexist
+Filename: "{app}\Radarr.Console.exe"; Parameters: "/u"; Flags: runhidden waituntilterminated skipifdoesntexist
 
 [Code]
 function PrepareToInstall(var NeedsRestart: Boolean): String;
