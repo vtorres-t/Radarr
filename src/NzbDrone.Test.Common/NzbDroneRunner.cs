@@ -55,11 +55,11 @@ namespace NzbDrone.Test.Common
 
             if (BuildInfo.IsDebug)
             {
-                Start(Path.Combine(TestContext.CurrentContext.TestDirectory, "..", "..", "_output", "net6.0", consoleExe));
+                Start(Path.Combine(TestContext.CurrentContext.TestDirectory, "..", "..", "_output", "net9.0", consoleExe));
             }
             else
             {
-                Start(Path.Combine(TestContext.CurrentContext.TestDirectory, "..", "bin", consoleExe));
+                Start(Path.Combine(TestContext.CurrentContext.TestDirectory, "bin", consoleExe));
             }
 
             while (true)

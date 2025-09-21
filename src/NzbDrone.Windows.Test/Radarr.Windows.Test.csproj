@@ -1,10 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net6.0</TargetFrameworks>
+    <TargetFrameworks>net9.0</TargetFrameworks>
   </PropertyGroup>
+  <ItemGroup>
+  <PackageReference Include="GitHubActionsTestLogger" Version="2.4.1" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NzbDrone.Common.Test\Radarr.Common.Test.csproj" />
     <ProjectReference Include="..\NzbDrone.Test.Common\Radarr.Test.Common.csproj" />
     <ProjectReference Include="..\NzbDrone.Windows\Radarr.Windows.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Update="coverlet.collector" Version="6.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 </Project>
