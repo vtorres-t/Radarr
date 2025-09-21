@@ -15,8 +15,6 @@ namespace NzbDrone.Core.Datastore.Migration.Framework
 {
     public class NzbDroneSQLiteProcessor : SQLiteProcessor
     {
-        private readonly SQLiteQuoter _quoter;
-
         public NzbDroneSQLiteProcessor(SQLiteDbFactory factory,
                                        SQLiteGenerator generator,
                                        ILogger<NzbDroneSQLiteProcessor> logger,
@@ -26,7 +24,6 @@ namespace NzbDrone.Core.Datastore.Migration.Framework
                                        SQLiteQuoter quoter)
         : base(factory, generator, logger, options, connectionStringAccessor, serviceProvider, quoter)
         {
-            _quoter = quoter;
         }
 
         public override void Process(AlterColumnExpression expression)
@@ -38,32 +35,10 @@ namespace NzbDrone.Core.Datastore.Migration.Framework
 
             if (columnIndex == -1)
             {
-                throw new ApplicationException($"Column {expression.Column.Name} does not exist on table {expression.TableName}.");
+                throw new ApplicationException(string.Format("Column {0} does not exist on table {1}.", expression.Column.Name, expression.TableName));
             }
 
             columnDefinitions[columnIndex] = expression.Column;
-
-            tableDefinition.Columns = columnDefinitions;
-
-            ProcessAlterTable(tableDefinition);
-        }
-
-        public override void Process(AlterDefaultConstraintExpression expression)
-        {
-            var tableDefinition = GetTableSchema(expression.TableName);
-
-            var columnDefinitions = tableDefinition.Columns.ToList();
-            var columnIndex = columnDefinitions.FindIndex(c => c.Name == expression.ColumnName);
-
-            if (columnIndex == -1)
-            {
-                throw new ApplicationException($"Column {expression.ColumnName} does not exist on table {expression.TableName}.");
-            }
-
-            var changedColumn = columnDefinitions[columnIndex];
-            changedColumn.DefaultValue = expression.DefaultValue;
-
-            columnDefinitions[columnIndex] = changedColumn;
 
             tableDefinition.Columns = columnDefinitions;
 
@@ -87,7 +62,7 @@ namespace NzbDrone.Core.Datastore.Migration.Framework
 
             if (columnsToRemove.Any())
             {
-                throw new ApplicationException($"Column {columnsToRemove.First()} does not exist on table {expression.TableName}.");
+                throw new ApplicationException(string.Format("Column {0} does not exist on table {1}.", columnsToRemove.First(), expression.TableName));
             }
 
             ProcessAlterTable(tableDefinition);
@@ -103,12 +78,12 @@ namespace NzbDrone.Core.Datastore.Migration.Framework
 
             if (columnIndex == -1)
             {
-                throw new ApplicationException($"Column {expression.OldName} does not exist on table {expression.TableName}.");
+                throw new ApplicationException(string.Format("Column {0} does not exist on table {1}.", expression.OldName, expression.TableName));
             }
 
             if (columnDefinitions.Any(c => c.Name == expression.NewName))
             {
-                throw new ApplicationException($"Column {expression.NewName} already exists on table {expression.TableName}.");
+                throw new ApplicationException(string.Format("Column {0} already exists on table {1}.", expression.NewName, expression.TableName));
             }
 
             oldColumnDefinitions[columnIndex] = (ColumnDefinition)columnDefinitions[columnIndex].Clone();
@@ -153,20 +128,21 @@ namespace NzbDrone.Core.Datastore.Migration.Framework
             }
 
             // What is the cleanest way to do this? Add function to Generator?
-            var columnsToInsert = string.Join(", ", tableDefinition.Columns.Select(c => _quoter.QuoteColumnName(c.Name)));
-            var columnsToFetch = string.Join(", ", (oldColumnDefinitions ?? tableDefinition.Columns).Select(c => _quoter.QuoteColumnName(c.Name)));
+            var quoter = new SQLiteQuoter();
+            var columnsToInsert = string.Join(", ", tableDefinition.Columns.Select(c => quoter.QuoteColumnName(c.Name)));
+            var columnsToFetch = string.Join(", ", (oldColumnDefinitions ?? tableDefinition.Columns).Select(c => quoter.QuoteColumnName(c.Name)));
 
-            Process(new CreateTableExpression { TableName = tempTableName, Columns = tableDefinition.Columns.ToList() });
+            Process(new CreateTableExpression() { TableName = tempTableName, Columns = tableDefinition.Columns.ToList() });
 
-            Process($"INSERT INTO {_quoter.QuoteTableName(tempTableName)} ({columnsToInsert}) SELECT {columnsToFetch} FROM {_quoter.QuoteTableName(tableName)}");
+            Process(string.Format("INSERT INTO {0} ({1}) SELECT {2} FROM {3}", quoter.QuoteTableName(tempTableName), columnsToInsert, columnsToFetch, quoter.QuoteTableName(tableName)));
 
-            Process(new DeleteTableExpression { TableName = tableName });
+            Process(new DeleteTableExpression() { TableName = tableName });
 
-            Process(new RenameTableExpression { OldName = tempTableName, NewName = tableName });
+            Process(new RenameTableExpression() { OldName = tempTableName, NewName = tableName });
 
             foreach (var index in tableDefinition.Indexes)
             {
-                Process(new CreateIndexExpression { Index = index });
+                Process(new CreateIndexExpression() { Index = index });
             }
         }
     }
