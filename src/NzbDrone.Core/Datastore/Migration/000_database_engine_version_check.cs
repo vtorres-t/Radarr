@@ -7,7 +7,7 @@ using NzbDrone.Common.Instrumentation;
 namespace NzbDrone.Core.Datastore.Migration
 {
     [Maintenance(MigrationStage.BeforeAll, TransactionBehavior.None)]
-    public class DatabaseEngineVersionCheck : ForwardOnlyMigration
+    public class DatabaseEngineVersionCheck : FluentMigrator.Migration
     {
         protected readonly Logger _logger;
 
@@ -20,6 +20,11 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             IfDatabase("sqlite").Execute.WithConnection(LogSqliteVersion);
             IfDatabase("postgres").Execute.WithConnection(LogPostgresVersion);
+        }
+
+        public override void Down()
+        {
+            // No-op
         }
 
         private void LogSqliteVersion(IDbConnection conn, IDbTransaction tran)
