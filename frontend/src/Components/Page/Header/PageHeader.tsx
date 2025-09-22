@@ -75,7 +75,6 @@ function PageHeader({ isSmallScreen }: PageHeaderProps) {
       <MovieSearchInput />
 
       <div className={styles.right}>
-
         <PageHeaderActionsMenu
           onKeyboardShortcutsPress={handleOpenKeyboardShortcutsModal}
         />
