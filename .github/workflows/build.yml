@@ -27,7 +27,7 @@ env:
   FRAMEWORK: net9.0
   RAW_BRANCH_NAME: ${{ inputs.branch || github.head_ref || github.ref_name }}
   RADARR_MAJOR_VERSION: 6
-  VERSION: ${{ inputs.version || '6.0.0' }}
+  VERSION: ${{ inputs.version || '6.0.1' }}
 
 jobs:
   prepare:
@@ -53,15 +53,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
- #         - runtime: linux-arm
- #           package_tests: false
- #           os: ubuntu-latest
- #         - runtime: linux-arm64
- #           package_tests: false
- #           os: ubuntu-latest
- #         - runtime: linux-musl-arm64
- #           package_tests: false
- #           os: ubuntu-latest
           - runtime: linux-musl-x64
             package_tests: false
             os: ubuntu-latest
@@ -71,14 +62,11 @@ jobs:
           - runtime: win-x64
             package_tests: true
             os: ubuntu-latest
- #         - runtime: win-x86
- #           package_tests: false
- #           os: ubuntu-latest
 
     runs-on: ${{ matrix.os }}
     steps:
       - name: Check out
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Build
         uses: ./.github/actions/build
@@ -93,7 +81,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Volta
         uses: volta-cli/action@v4
@@ -132,7 +120,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Check out
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Test
         uses: ./.github/actions/test
@@ -145,9 +133,13 @@ jobs:
   unit_test_postgres:
     needs: backend
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        postgres-version: [16, 17]
     steps:
       - name: Check out
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Test
         uses: ./.github/actions/test
@@ -157,6 +149,7 @@ jobs:
           pattern: Radarr.*.Test.dll
           filter: TestCategory!=ManualTest&TestCategory!=WINDOWS&TestCategory!=IntegrationTest&TestCategory!=AutomationTest
           use_postgres: true
+          postgres-version: ${{ matrix.postgres-version }}
 
   integration_test:
     needs: [prepare, backend]
@@ -178,7 +171,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Check out
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Test
         uses: ./.github/actions/test
