@@ -172,4 +172,3 @@ jobs:
           integration_tests: true
           binary_artifact: ${{ matrix.binary_artifact }}
           binary_path: ${{ matrix.binary_path }}
-
