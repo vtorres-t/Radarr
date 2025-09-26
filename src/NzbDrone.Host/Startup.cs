@@ -13,7 +13,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 using NzbDrone.Common.EnvironmentInfo;
-using NzbDrone.Common.Instrumentation;
 using NzbDrone.Common.Processes;
 using NzbDrone.Common.Serializer;
 using NzbDrone.Core.Configuration;
@@ -147,7 +146,6 @@ namespace NzbDrone.Host
                               Lazy<ILogDatabase> logDatabaseFactory,
                               DatabaseTarget dbTarget,
                               ISingleInstancePolicy singleInstancePolicy,
-                              InitializeLogger initializeLogger,
                               ReconfigureLogging reconfigureLogging,
                               IAppFolderFactory appFolderFactory,
                               IProvidePidFile pidFileProvider,
@@ -157,7 +155,6 @@ namespace NzbDrone.Host
                               IEventAggregator eventAggregator,
                               RadarrErrorPipeline errorHandler)
         {
-            initializeLogger.Initialize();
             appFolderFactory.Register();
             pidFileProvider.Write();
 
