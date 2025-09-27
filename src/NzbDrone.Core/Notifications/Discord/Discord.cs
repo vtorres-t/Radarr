@@ -41,7 +41,7 @@ namespace NzbDrone.Core.Notifications.Discord
                 Author = new DiscordAuthor
                 {
                     Name = Settings.Author.IsNullOrWhiteSpace() ? _configFileProvider.InstanceName : Settings.Author,
-                    IconUrl = "https://raw.githubusercontent.com/Radarr/Radarr/develop/Logo/256.png"
+                    IconUrl = "https://raw.githubusercontent.com/vtorres-t/Radarr/develop/Logo/256.png"
                 },
                 Url = $"https://www.themoviedb.org/movie/{message.Movie.MovieMetadata.Value.TmdbId}",
                 Description = "Movie Grabbed",
@@ -145,7 +145,7 @@ namespace NzbDrone.Core.Notifications.Discord
                 Author = new DiscordAuthor
                 {
                     Name = Settings.Author.IsNullOrWhiteSpace() ? _configFileProvider.InstanceName : Settings.Author,
-                    IconUrl = "https://raw.githubusercontent.com/Radarr/Radarr/develop/Logo/256.png"
+                    IconUrl = "https://raw.githubusercontent.com/vtorres-t/Radarr/develop/Logo/256.png"
                 },
                 Url = $"https://www.themoviedb.org/movie/{message.Movie.MovieMetadata.Value.TmdbId}",
                 Description = isUpgrade ? "Movie Upgraded" : "Movie Imported",
@@ -260,7 +260,7 @@ namespace NzbDrone.Core.Notifications.Discord
                 Author = new DiscordAuthor
                 {
                     Name = Settings.Author.IsNullOrWhiteSpace() ? _configFileProvider.InstanceName : Settings.Author,
-                    IconUrl = "https://raw.githubusercontent.com/Radarr/Radarr/develop/Logo/256.png"
+                    IconUrl = "https://raw.githubusercontent.com/vtorres-t/Radarr/develop/Logo/256.png"
                 },
                 Url = $"https://www.themoviedb.org/movie/{movie.MovieMetadata.Value.TmdbId}",
                 Title = movie.Title,
@@ -317,7 +317,7 @@ namespace NzbDrone.Core.Notifications.Discord
                 Author = new DiscordAuthor
                 {
                     Name = Settings.Author.IsNullOrWhiteSpace() ? _configFileProvider.InstanceName : Settings.Author,
-                    IconUrl = "https://raw.githubusercontent.com/Radarr/Radarr/develop/Logo/256.png"
+                    IconUrl = "https://raw.githubusercontent.com/vtorres-t/Radarr/develop/Logo/256.png"
                 },
                 Url = $"https://www.themoviedb.org/movie/{movie.MovieMetadata.Value.TmdbId}",
                 Title = movie.Title,
@@ -358,7 +358,7 @@ namespace NzbDrone.Core.Notifications.Discord
                 Author = new DiscordAuthor
                 {
                     Name = Settings.Author.IsNullOrWhiteSpace() ? _configFileProvider.InstanceName : Settings.Author,
-                    IconUrl = "https://raw.githubusercontent.com/Radarr/Radarr/develop/Logo/256.png"
+                    IconUrl = "https://raw.githubusercontent.com/vtorres-t/Radarr/develop/Logo/256.png"
                 },
                 Url = $"https://www.themoviedb.org/movie/{movie.MovieMetadata.Value.TmdbId}",
                 Title = GetTitle(movie),
@@ -384,7 +384,7 @@ namespace NzbDrone.Core.Notifications.Discord
                 Author = new DiscordAuthor
                 {
                     Name = Settings.Author.IsNullOrWhiteSpace() ? _configFileProvider.InstanceName : Settings.Author,
-                    IconUrl = "https://raw.githubusercontent.com/Radarr/Radarr/develop/Logo/256.png"
+                    IconUrl = "https://raw.githubusercontent.com/vtorres-t/Radarr/develop/Logo/256.png"
                 },
                 Title = healthCheck.Source.Name,
                 Description = healthCheck.Message,
@@ -404,7 +404,7 @@ namespace NzbDrone.Core.Notifications.Discord
                 Author = new DiscordAuthor
                 {
                     Name = Settings.Author.IsNullOrWhiteSpace() ? _configFileProvider.InstanceName : Settings.Author,
-                    IconUrl = "https://raw.githubusercontent.com/Radarr/Radarr/develop/Logo/256.png"
+                    IconUrl = "https://raw.githubusercontent.com/vtorres-t/Radarr/develop/Logo/256.png"
                 },
                 Title = "Health Issue Resolved: " + previousCheck.Source.Name,
                 Description = $"The following issue is now resolved: {previousCheck.Message}",
@@ -424,7 +424,7 @@ namespace NzbDrone.Core.Notifications.Discord
                 Author = new DiscordAuthor
                 {
                     Name = Settings.Author.IsNullOrWhiteSpace() ? _configFileProvider.InstanceName : Settings.Author,
-                    IconUrl = "https://raw.githubusercontent.com/Radarr/Radarr/develop/Logo/256.png"
+                    IconUrl = "https://raw.githubusercontent.com/vtorres-t/Radarr/develop/Logo/256.png"
                 },
                 Title = APPLICATION_UPDATE_TITLE,
                 Timestamp = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"),
@@ -458,7 +458,7 @@ namespace NzbDrone.Core.Notifications.Discord
                 Author = new DiscordAuthor
                 {
                     Name = Settings.Author.IsNullOrWhiteSpace() ? _configFileProvider.InstanceName : Settings.Author,
-                    IconUrl = "https://raw.githubusercontent.com/Radarr/Radarr/develop/Logo/256.png"
+                    IconUrl = "https://raw.githubusercontent.com/vtorres-t/Radarr/develop/Logo/256.png"
                 },
                 Url = movie?.MovieMetadata.Value.TmdbId > 0 ? $"https://www.themoviedb.org/movie/{movie.MovieMetadata.Value.TmdbId}" : null,
                 Description = "Manual interaction needed",

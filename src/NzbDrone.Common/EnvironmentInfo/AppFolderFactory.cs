@@ -104,11 +104,31 @@ namespace NzbDrone.Common.EnvironmentInfo
                     RemovePidFile();
                 }
 
-                // Exit if a radarr.db already exists
-                if (_diskProvider.FileExists(_appFolderInfo.GetDatabase()))
+                if (_appFolderInfo.LegacyAppDataFolder.IsNullOrWhiteSpace())
                 {
                     return;
                 }
+
+                if (_diskProvider.FileExists(_appFolderInfo.GetDatabase()) || _diskProvider.FileExists(_appFolderInfo.GetConfigPath()))
+                {
+                    return;
+                }
+
+                if (!_diskProvider.FolderExists(_appFolderInfo.LegacyAppDataFolder))
+                {
+                    return;
+                }
+
+                // Delete the bin folder on Windows
+                var binFolder = Path.Combine(_appFolderInfo.LegacyAppDataFolder, "bin");
+
+                if (OsInfo.IsWindows && _diskProvider.FolderExists(binFolder))
+                {
+                    _diskProvider.DeleteFolder(binFolder, true);
+                }
+
+                // Transfer other files and folders (with copy so a backup is maintained)
+                _diskTransferService.TransferFolder(_appFolderInfo.LegacyAppDataFolder, _appFolderInfo.AppDataFolder, TransferMode.Copy);
 
                 // Rename the DB file
                 if (_diskProvider.FileExists(oldDbFile))
@@ -118,6 +138,9 @@ namespace NzbDrone.Common.EnvironmentInfo
 
                 // Remove Old PID file
                 RemovePidFile();
+
+                // Delete the old files after everything has been copied
+                _diskProvider.DeleteFolder(_appFolderInfo.LegacyAppDataFolder, true);
             }
             catch (Exception ex)
             {
