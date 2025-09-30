@@ -145,7 +145,7 @@ namespace NzbDrone.Common.EnvironmentInfo
             catch (Exception ex)
             {
                 _logger.Debug(ex, ex.Message);
-                throw new RadarrStartupException("Unable to migrate DB from nzbdrone.db to {0}. Migrate manually", _appFolderInfo.GetDatabase());
+                throw new RadarrStartupException(ex, "Unable to migrate DB from nzbdrone.db to {0}. Migrate manually", _appFolderInfo.GetDatabase());
             }
         }
 
@@ -222,7 +222,7 @@ namespace NzbDrone.Common.EnvironmentInfo
 
         private void RemovePidFile()
         {
-            if (OsInfo.IsNotWindows)
+            if (OsInfo.IsNotWindows && _diskProvider.FolderExists(_appFolderInfo.AppDataFolder))
             {
                 _diskProvider.DeleteFile(Path.Combine(_appFolderInfo.AppDataFolder, "radarr.pid"));
             }
