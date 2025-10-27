@@ -3,8 +3,8 @@
     <TargetFrameworks>net9.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Selenium.Support" Version="4.36.0" />
-    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="141.0.7390.5400" />
+    <PackageReference Include="Selenium.Support" Version="4.38.0" />
+    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="141.0.7390.12200" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NzbDrone.Test.Common\Radarr.Test.Common.csproj" />
