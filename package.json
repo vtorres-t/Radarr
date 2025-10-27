@@ -13,7 +13,7 @@
     "stylelint-linux": "stylelint $(find frontend -name '*.css') --config frontend/.stylelintrc",
     "stylelint-windows": "stylelint \"frontend/**/*.css\" --config frontend/.stylelintrc"
   },
-  "repository": "https://github.com/Radarr/Radarr",
+  "repository": "https://github.com/vtorres-t/Radarr",
   "author": "Team Radarr",
   "license": "GPL-3.0",
   "readmeFilename": "readme.md",
@@ -29,7 +29,7 @@
     "@fortawesome/free-solid-svg-icons": "6.7.2",
     "@fortawesome/react-fontawesome": "0.2.2",
     "@juggle/resize-observer": "3.4.0",
-    "@microsoft/signalr": "8.0.7",
+    "@microsoft/signalr": "9.0.6",
     "@sentry/browser": "7.119.1",
     "@sentry/integrations": "7.119.1",
     "@tanstack/react-query": "5.74.3",

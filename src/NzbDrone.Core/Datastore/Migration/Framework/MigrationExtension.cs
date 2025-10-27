@@ -27,7 +27,6 @@ namespace NzbDrone.Core.Datastore.Migration.Framework
             var command = conn.CreateCommand();
             command.Transaction = tran;
             command.CommandText = query;
-
             return command;
         }
 
@@ -38,7 +37,9 @@ namespace NzbDrone.Core.Datastore.Migration.Framework
             command.Parameters.Add(parameter);
         }
 
-        public static IMigrationRunnerBuilder AddNzbDroneSQLite(this IMigrationRunnerBuilder builder, bool binaryGuid = false, bool useStrictTables = false)
+        public static IMigrationRunnerBuilder AddNzbDroneSQLite(this IMigrationRunnerBuilder builder,
+            bool binaryGuid = false,
+            bool useStrictTables = false)
         {
             builder.Services
                 .AddTransient<SQLiteBatchParser>()

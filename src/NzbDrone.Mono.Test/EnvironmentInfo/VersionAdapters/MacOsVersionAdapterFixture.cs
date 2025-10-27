@@ -25,7 +25,8 @@ namespace NzbDrone.Mono.Test.EnvironmentInfo.VersionAdapters
             const string plistPath = "/System/Library/CoreServices/SystemVersion.plist";
 
             Mocker.GetMock<IDiskProvider>()
-                .Setup(c => c.FolderExists("/System/Library/CoreServices/")).Returns(true);
+                .Setup(c => c.FolderExists("/System/Library/CoreServices/"))
+                .Returns(true);
 
             Mocker.GetMock<IDiskProvider>()
                 .Setup(c => c.GetFiles("/System/Library/CoreServices/", false))

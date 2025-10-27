@@ -278,7 +278,7 @@ namespace NzbDrone.Host
 
             try
             {
-                certificate = new X509Certificate2(cert, password, X509KeyStorageFlags.DefaultKeySet);
+                certificate = X509CertificateLoader.LoadCertificateFromFile(cert);
             }
             catch (CryptographicException ex)
             {
