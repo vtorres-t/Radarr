@@ -6,7 +6,6 @@ using NzbDrone.Core.ImportLists;
 using NzbDrone.Core.Messaging.Commands;
 using NzbDrone.Core.Movies.Commands;
 using NzbDrone.Core.Test.Framework;
-using NzbDrone.Core.Update.Commands;
 
 namespace NzbDrone.Core.Test.Messaging.Commands
 {
@@ -31,18 +30,6 @@ namespace NzbDrone.Core.Test.Messaging.Commands
                 .CreateNew()
                 .With(c => c.Name = "ImportListSync")
                 .With(c => c.Body = new ImportListSyncCommand())
-                .With(c => c.Status = CommandStatus.Started)
-                .Build();
-
-            Subject.Add(commandModel);
-        }
-
-        private void GivenStartedExclusiveCommand()
-        {
-            var commandModel = Builder<CommandModel>
-                .CreateNew()
-                .With(c => c.Name = "ApplicationUpdate")
-                .With(c => c.Body = new ApplicationUpdateCommand())
                 .With(c => c.Status = CommandStatus.Started)
                 .Build();
 
@@ -140,42 +127,6 @@ namespace NzbDrone.Core.Test.Messaging.Commands
 
             command.Should().NotBeNull();
             command.Status.Should().Be(CommandStatus.Started);
-        }
-
-        [Test]
-        public void should_not_return_exclusive_command_if_any_running()
-        {
-            GivenStartedDiskCommand();
-
-            var newCommandModel = Builder<CommandModel>
-                .CreateNew()
-                .With(c => c.Name = "ApplicationUpdate")
-                .With(c => c.Body = new ApplicationUpdateCommand())
-                .Build();
-
-            Subject.Add(newCommandModel);
-
-            Subject.TryGet(out var command);
-
-            command.Should().BeNull();
-        }
-
-        [Test]
-        public void should_not_return_any_command_if_exclusive_running()
-        {
-            GivenStartedExclusiveCommand();
-
-            var newCommandModel = Builder<CommandModel>
-                .CreateNew()
-                .With(c => c.Name = "RefreshMovie")
-                .With(c => c.Body = new RefreshMovieCommand())
-                .Build();
-
-            Subject.Add(newCommandModel);
-
-            Subject.TryGet(out var command);
-
-            command.Should().BeNull();
         }
 
         [Test]

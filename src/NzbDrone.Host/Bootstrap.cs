@@ -110,7 +110,6 @@ namespace NzbDrone.Host
                                 services.Configure<AuthOptions>(config.GetSection("Radarr:Auth"));
                                 services.Configure<ServerOptions>(config.GetSection("Radarr:Server"));
                                 services.Configure<LogOptions>(config.GetSection("Radarr:Log"));
-                                services.Configure<UpdateOptions>(config.GetSection("Radarr:Update"));
                             }).Build();
 
                         break;
@@ -180,7 +179,6 @@ namespace NzbDrone.Host
                     services.Configure<AuthOptions>(config.GetSection("Radarr:Auth"));
                     services.Configure<ServerOptions>(config.GetSection("Radarr:Server"));
                     services.Configure<LogOptions>(config.GetSection("Radarr:Log"));
-                    services.Configure<UpdateOptions>(config.GetSection("Radarr:Update"));
                 })
                 .ConfigureWebHost(builder =>
                 {

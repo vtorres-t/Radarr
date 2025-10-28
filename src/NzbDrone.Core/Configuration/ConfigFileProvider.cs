@@ -18,7 +18,6 @@ using NzbDrone.Core.Datastore;
 using NzbDrone.Core.Lifecycle;
 using NzbDrone.Core.Messaging.Commands;
 using NzbDrone.Core.Messaging.Events;
-using NzbDrone.Core.Update;
 
 namespace NzbDrone.Core.Configuration
 {
@@ -44,16 +43,12 @@ namespace NzbDrone.Core.Configuration
         bool LogSql { get; }
         int LogRotate { get; }
         int LogSizeLimit { get; }
-        string Branch { get; }
         string ApiKey { get; }
         string SslCertPath { get; }
         string SslCertPassword { get; }
         string UrlBase { get; }
         string UiFolder { get; }
         string InstanceName { get; }
-        bool UpdateAutomatically { get; }
-        UpdateMechanism UpdateMechanism { get; }
-        string UpdateScriptPath { get; }
         string SyslogServer { get; }
         int SyslogPort { get; }
         string SyslogLevel { get; }
@@ -79,7 +74,6 @@ namespace NzbDrone.Core.Configuration
         private readonly AuthOptions _authOptions;
         private readonly AppOptions _appOptions;
         private readonly ServerOptions _serverOptions;
-        private readonly UpdateOptions _updateOptions;
         private readonly LogOptions _logOptions;
 
         private readonly string _configFile;
@@ -95,7 +89,6 @@ namespace NzbDrone.Core.Configuration
                                   IOptions<AuthOptions> authOptions,
                                   IOptions<AppOptions> appOptions,
                                   IOptions<ServerOptions> serverOptions,
-                                  IOptions<UpdateOptions> updateOptions,
                                   IOptions<LogOptions> logOptions)
         {
             _cache = cacheManager.GetCache<string>(GetType());
@@ -106,7 +99,6 @@ namespace NzbDrone.Core.Configuration
             _authOptions = authOptions.Value;
             _appOptions = appOptions.Value;
             _serverOptions = serverOptions.Value;
-            _updateOptions = updateOptions.Value;
             _logOptions = logOptions.Value;
         }
 
@@ -231,10 +223,6 @@ namespace NzbDrone.Core.Configuration
                 ? enumValue
                 : GetValueEnum("AuthenticationRequired", AuthenticationRequiredType.Enabled);
 
-        public bool AnalyticsEnabled => _logOptions.AnalyticsEnabled ?? GetValueBoolean("AnalyticsEnabled", true, persist: false);
-
-        public string Branch => _updateOptions.Branch ?? GetValue("Branch", "master").ToLowerInvariant();
-
         public string LogLevel => _logOptions.Level ?? GetValue("LogLevel", "debug").ToLowerInvariant();
         public string ConsoleLogLevel => _logOptions.ConsoleLevel ?? GetValue("ConsoleLogLevel", string.Empty, persist: false);
 
@@ -242,7 +230,7 @@ namespace NzbDrone.Core.Configuration
             Enum.TryParse<ConsoleLogFormat>(_logOptions.ConsoleFormat, out var enumValue)
                 ? enumValue
                 : GetValueEnum("ConsoleLogFormat", ConsoleLogFormat.Standard, false);
-
+        public bool AnalyticsEnabled => _logOptions.AnalyticsEnabled ?? GetValueBoolean("AnalyticsEnabled", true, persist: false);
         public string Theme => _appOptions.Theme ?? GetValue("Theme", "auto", persist: false);
         public string PostgresHost => _postgresOptions?.Host ?? GetValue("PostgresHost", string.Empty, persist: false);
         public string PostgresUser => _postgresOptions?.User ?? GetValue("PostgresUser", string.Empty, persist: false);
@@ -288,15 +276,6 @@ namespace NzbDrone.Core.Configuration
                 return BuildInfo.AppName;
             }
         }
-
-        public bool UpdateAutomatically => _updateOptions.Automatically ?? GetValueBoolean("UpdateAutomatically", OsInfo.IsWindows, false);
-
-        public UpdateMechanism UpdateMechanism =>
-            Enum.TryParse<UpdateMechanism>(_updateOptions.Mechanism, out var enumValue)
-                ? enumValue
-                : GetValueEnum("UpdateMechanism", UpdateMechanism.BuiltIn, false);
-
-        public string UpdateScriptPath => _updateOptions.ScriptPath ?? GetValue("UpdateScriptPath", "", false);
 
         public string SyslogServer => _logOptions.SyslogServer ?? GetValue("SyslogServer", "", persist: false);
 

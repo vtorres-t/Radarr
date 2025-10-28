@@ -387,7 +387,6 @@
     "UpgradesAllowedHelpText": "Si se deshabilita las calidades no serán actualizadas",
     "UpdateScriptPathHelpText": "Ruta a un script personalizado que toma un paquete de actualización extraído y gestiona el resto del proceso de actualización",
     "UpdateMechanismHelpText": "Usar el actualizador integrado de {appName} o un script",
-    "UpdateAutomaticallyHelpText": "Descarga e instala actualizaciones automáticamente. Podrás seguir instalándolas desde Sistema: Actualizaciones",
     "ICalIncludeUnmonitoredMoviesHelpText": "Incluir las películas no monitorizadas en la fuente de iCal",
     "Ungroup": "Sin agrupar",
     "TagsLoadError": "No se pudo cargar Etiquetas",

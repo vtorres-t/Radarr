@@ -30,7 +30,6 @@ import LogsTableConnector from 'System/Events/LogsTableConnector';
 import Logs from 'System/Logs/Logs';
 import Status from 'System/Status/Status';
 import Tasks from 'System/Tasks/Tasks';
-import Updates from 'System/Updates/Updates';
 import getPathWithUrlBase from 'Utilities/getPathWithUrlBase';
 import CutoffUnmet from 'Wanted/CutoffUnmet/CutoffUnmet';
 import Missing from 'Wanted/Missing/Missing';
@@ -138,8 +137,6 @@ function AppRoutes() {
       <Route path="/system/tasks" component={Tasks} />
 
       <Route path="/system/backup" component={BackupsConnector} />
-
-      <Route path="/system/updates" component={Updates} />
 
       <Route path="/system/events" component={LogsTableConnector} />
 
