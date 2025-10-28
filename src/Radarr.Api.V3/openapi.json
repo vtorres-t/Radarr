@@ -9534,9 +9534,6 @@
           "authenticationRequired": {
             "$ref": "#/components/schemas/AuthenticationRequiredType"
           },
-          "analyticsEnabled": {
-            "type": "boolean"
-          },
           "username": {
             "type": "string",
             "nullable": true

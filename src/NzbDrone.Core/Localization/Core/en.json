@@ -70,7 +70,6 @@
   "Always": "Always",
   "AnalyseVideoFiles": "Analyze video files",
   "AnalyseVideoFilesHelpText": "Extract video information such as resolution, runtime and codec information from files. This requires {appName} to read parts of the file which may cause high disk or network activity during scans.",
-  "Analytics": "Analytics",
   "Announced": "Announced",
   "AnnouncedMovieAvailabilityDescription": "Movies are considered available as soon as they are added to {appName}.",
   "AnnouncedMovieDescription": "Movie is announced",

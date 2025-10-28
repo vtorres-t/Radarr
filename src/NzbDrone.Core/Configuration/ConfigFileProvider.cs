@@ -36,7 +36,6 @@ namespace NzbDrone.Core.Configuration
         bool LaunchBrowser { get; }
         AuthenticationType AuthenticationMethod { get; }
         AuthenticationRequiredType AuthenticationRequired { get; }
-        bool AnalyticsEnabled { get; }
         string LogLevel { get; }
         string ConsoleLogLevel { get; }
         ConsoleLogFormat ConsoleLogFormat { get; }
@@ -230,7 +229,6 @@ namespace NzbDrone.Core.Configuration
             Enum.TryParse<ConsoleLogFormat>(_logOptions.ConsoleFormat, out var enumValue)
                 ? enumValue
                 : GetValueEnum("ConsoleLogFormat", ConsoleLogFormat.Standard, false);
-        public bool AnalyticsEnabled => _logOptions.AnalyticsEnabled ?? GetValueBoolean("AnalyticsEnabled", true, persist: false);
         public string Theme => _appOptions.Theme ?? GetValue("Theme", "auto", persist: false);
         public string PostgresHost => _postgresOptions?.Host ?? GetValue("PostgresHost", string.Empty, persist: false);
         public string PostgresUser => _postgresOptions?.User ?? GetValue("PostgresUser", string.Empty, persist: false);
