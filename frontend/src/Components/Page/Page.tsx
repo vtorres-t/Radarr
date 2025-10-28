@@ -31,7 +31,7 @@ function Page({ children }: PageProps) {
   const { isSmallScreen } = useSelector(createDimensionsSelector());
   const { authentication } = useSelector(createSystemStatusSelector());
   const authenticationEnabled = authentication !== 'none';
-  const { isSidebarVisible, isUpdated, isDisconnected, version } = useSelector(
+  const { isSidebarVisible, isDisconnected, version } = useSelector(
     (state: AppState) => state.app
   );
 
