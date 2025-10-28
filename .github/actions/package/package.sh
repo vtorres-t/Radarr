@@ -32,8 +32,6 @@ do
   echo "Setting permissions"
   find $radarrFolder -name "ffprobe" -exec chmod a+x {} \;
   find $radarrFolder -name "Radarr" -exec chmod a+x {} \;
-  find $radarrFolder -name "Radarr.Update" -exec chmod a+x {} \;
-  
 
   echo "Packaging Artifact"
   if [[ "$name" == *"linux"* ]]; then

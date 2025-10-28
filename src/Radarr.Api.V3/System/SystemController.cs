@@ -76,7 +76,6 @@ namespace Radarr.Api.V3.System
                 IsWindows = OsInfo.IsWindows,
                 IsDocker = _osInfo.IsDocker,
                 Mode = _runtimeInfo.Mode,
-                Branch = _configFileProvider.Branch,
                 Authentication = _configFileProvider.AuthenticationMethod,
                 DatabaseType = _database.DatabaseType,
                 DatabaseVersion = _database.Version,
@@ -87,8 +86,6 @@ namespace Radarr.Api.V3.System
                 StartTime = _runtimeInfo.StartTime,
                 PackageVersion = _deploymentInfoProvider.PackageVersion,
                 PackageAuthor = _deploymentInfoProvider.PackageAuthor,
-                PackageUpdateMechanism = _deploymentInfoProvider.PackageUpdateMechanism,
-                PackageUpdateMechanismMessage = _deploymentInfoProvider.PackageUpdateMechanismMessage
             };
         }
 

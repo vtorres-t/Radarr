@@ -2,7 +2,6 @@ using System;
 using NzbDrone.Common.EnvironmentInfo;
 using NzbDrone.Core.Authentication;
 using NzbDrone.Core.Datastore;
-using NzbDrone.Core.Update;
 
 namespace Radarr.Api.V3.System
 {
@@ -37,7 +36,5 @@ namespace Radarr.Api.V3.System
         public DateTime StartTime { get; set; }
         public string PackageVersion { get; set; }
         public string PackageAuthor { get; set; }
-        public UpdateMechanism PackageUpdateMechanism { get; set; }
-        public string PackageUpdateMechanismMessage { get; set; }
     }
 }
