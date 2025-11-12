@@ -339,12 +339,12 @@ namespace NzbDrone.Core.Download.Clients.Deluge
                 };
             }
 
-            var labels = _proxy.GetAvailableLabels(Settings);
+            var labels = _proxy.GetAvailableLabels(Settings).ToList();
 
             if (Settings.MovieCategory.IsNotNullOrWhiteSpace() && !labels.Contains(Settings.MovieCategory))
             {
                 _proxy.AddLabel(Settings.MovieCategory, Settings);
-                labels = _proxy.GetAvailableLabels(Settings);
+                labels = _proxy.GetAvailableLabels(Settings).ToList();
 
                 if (!labels.Contains(Settings.MovieCategory))
                 {
@@ -358,7 +358,7 @@ namespace NzbDrone.Core.Download.Clients.Deluge
             if (Settings.MovieImportedCategory.IsNotNullOrWhiteSpace() && !labels.Contains(Settings.MovieImportedCategory))
             {
                 _proxy.AddLabel(Settings.MovieImportedCategory, Settings);
-                labels = _proxy.GetAvailableLabels(Settings);
+                labels = _proxy.GetAvailableLabels(Settings).ToList();
 
                 if (!labels.Contains(Settings.MovieImportedCategory))
                 {
