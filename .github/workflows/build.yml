@@ -23,7 +23,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  FRAMEWORK: net9.0
+  FRAMEWORK: net10.0
   RAW_BRANCH_NAME: ${{ inputs.branch || github.head_ref || github.ref_name }}
   RADARR_MAJOR_VERSION: 6
   VERSION: ${{ inputs.version }}
