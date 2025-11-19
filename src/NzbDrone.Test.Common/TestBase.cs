@@ -43,7 +43,6 @@ namespace NzbDrone.Test.Common
     {
         private static readonly Random _random = new Random();
         private static int _nextUid;
-
         private AutoMoqer _mocker;
         protected AutoMoqer Mocker
         {
