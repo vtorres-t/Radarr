@@ -3,9 +3,6 @@
     <TargetFrameworks>net10.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-  <PackageReference Include="GitHubActionsTestLogger" Version="2.4.1" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\NzbDrone.Common.Test\Radarr.Common.Test.csproj" />
     <ProjectReference Include="..\NzbDrone.Test.Common\Radarr.Test.Common.csproj" />
     <ProjectReference Include="..\NzbDrone.Windows\Radarr.Windows.csproj" />
