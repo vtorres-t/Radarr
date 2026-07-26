@@ -24,7 +24,7 @@
     <Folder Include="IndexerTests\TorrentleechTests\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Update="coverlet.collector" Version="6.0.4">
+    <PackageReference Update="coverlet.collector" Version="10.0.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
