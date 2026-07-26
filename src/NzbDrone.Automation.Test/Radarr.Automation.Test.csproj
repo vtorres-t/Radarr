@@ -3,14 +3,14 @@
     <TargetFrameworks>net10.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Selenium.Support" Version="4.44.0" />
-    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="148.0.7778.17800" />
+    <PackageReference Include="Selenium.Support" Version="4.46.0" />
+    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="150.0.7871.12400" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NzbDrone.Test.Common\Radarr.Test.Common.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Update="coverlet.collector" Version="6.0.4">
+    <PackageReference Update="coverlet.collector" Version="10.0.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
